@@ -39,8 +39,7 @@ Patch4:         expand-etcd-arch-validation.patch
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:x86_64 aarch64 ppc64le s390x}
 # If go_compiler is not set to 1, there is no virtual provide. Use golang instead.
-#BuildRequires:  %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang}
-BuildRequires:  compiler(go-compiler)
+BuildRequires:  go-compilers-golang-compiler
 
 Obsoletes: etcd3 < 3.0.15
 Provides: etcd3 = %{version}-%{release}
