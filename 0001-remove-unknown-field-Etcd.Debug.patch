@@ -1,0 +1,37 @@
+From 2c95b49b63651ae3e0a3f63c45c05295d1af2c42 Mon Sep 17 00:00:00 2001
+From: lsytj0413 <511121939@qq.com>
+Date: Thu, 19 Sep 2019 09:51:51 +0800
+Subject: [PATCH] test(functional): remove unknown field Etcd.Debug
+
+---
+ functional/tester/cluster_test.go | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/functional/tester/cluster_test.go b/functional/tester/cluster_test.go
+index 7c7b25f2ad..2948c00e7f 100644
+--- a/functional/tester/cluster_test.go
++++ b/functional/tester/cluster_test.go
+@@ -64,7 +64,6 @@ func Test_read(t *testing.T) {
+ 					InitialCorruptCheck: true,
+ 					Logger:              "zap",
+ 					LogOutputs:          []string{"/tmp/etcd-functional-1/etcd.log"},
+-					Debug:               true,
+ 				},
+ 				ClientCertData:      "",
+ 				ClientCertPath:      "",
+@@ -117,7 +116,6 @@ func Test_read(t *testing.T) {
+ 					InitialCorruptCheck: true,
+ 					Logger:              "zap",
+ 					LogOutputs:          []string{"/tmp/etcd-functional-2/etcd.log"},
+-					Debug:               true,
+ 				},
+ 				ClientCertData:      "",
+ 				ClientCertPath:      "",
+@@ -170,7 +168,6 @@ func Test_read(t *testing.T) {
+ 					InitialCorruptCheck: true,
+ 					Logger:              "zap",
+ 					LogOutputs:          []string{"/tmp/etcd-functional-3/etcd.log"},
+-					Debug:               true,
+ 				},
+ 				ClientCertData:      "",
+ 				ClientCertPath:      "",
