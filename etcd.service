@@ -8,8 +8,6 @@ Wants=network-online.target
 Type=notify
 WorkingDirectory=/var/lib/etcd/
 EnvironmentFile=-/etc/etcd/etcd.conf
-Environment=ETCD_NAME
-Environment=ETCD_UNSUPPORTED_ARCH=arm64
 User=etcd
 # set GOMAXPROCS to number of processors
 ExecStart=/bin/bash -c "GOMAXPROCS=$(nproc) /usr/bin/etcd"
