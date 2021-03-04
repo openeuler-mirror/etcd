@@ -9,8 +9,6 @@
 %global forgeurl        https://github.com/etcd-io/etcd
 Version:                3.4.14
 
-%gometa
-
 %global goipaths0       go.etcd.io/etcd
 %global goipathsex0     go.etcd.io/etcd/etcdserver/api/v3rpc/
 
@@ -33,13 +31,13 @@ system.}
 %global gosupfiles      integration/fixtures/* etcdserver/api/v2http/testdata/*
 
 Name:           etcd
-Release:        1
+Release:        2
 Summary:        Distributed reliable key-value store for the most critical data of a distributed system
 
 # Upstream license specification: Apache-2.0
 License:        ASL 2.0 and MIT
 URL:            https://github.com/etcd-io/etcd
-Source0:        %{gosource}
+Source0:        etcd-%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.conf
 Source3:        man-%{man_version}.tar.gz
@@ -48,79 +46,11 @@ Source10:       genmanpages.sh
 # update grpc-go version to v1.32.0
 Patch1:         0001-Convert-int-to-string-using-strconv.Itoa.patch
 
-BuildRequires:  go-compilers-golang-compiler
-# BuildRequires:  golang(github.com/bgentry/speakeasy)
-# # BuildRequires:  golang(github.com/cockroachdb/datadriven)
-# BuildRequires:  golang(github.com/coreos/go-semver/semver)
-# BuildRequires:  golang(github.com/coreos/go-systemd/daemon)
-# BuildRequires:  golang(github.com/coreos/go-systemd/journal)
-# BuildRequires:  golang(github.com/coreos/pkg/capnslog)
-# BuildRequires:  golang(github.com/creack/pty)
-# BuildRequires:  golang(github.com/dgrijalva/jwt-go)
-# BuildRequires:  golang(github.com/dustin/go-humanize)
-# BuildRequires:  golang(github.com/gogo/protobuf/gogoproto)
-# BuildRequires:  golang(github.com/gogo/protobuf/proto)
-# BuildRequires:  golang(github.com/golang/groupcache/lru)
-# BuildRequires:  golang(github.com/golang/protobuf/proto)
-# BuildRequires:  golang(github.com/google/btree)
-# BuildRequires:  golang(github.com/google/uuid)
-# %%if %%{without bootstrap}
-# BuildRequires:  golang(github.com/grpc-ecosystem/go-grpc-middleware)
-# %endif
-# BuildRequires:  golang(github.com/grpc-ecosystem/go-grpc-prometheus)
-# BuildRequires:  golang(github.com/grpc-ecosystem/grpc-gateway/runtime)
-# BuildRequires:  golang(github.com/grpc-ecosystem/grpc-gateway/utilities)
-# BuildRequires:  golang(github.com/jonboulle/clockwork)
-# BuildRequires:  golang(github.com/json-iterator/go)
-# BuildRequires:  golang(github.com/modern-go/reflect2)
-# BuildRequires:  golang(github.com/olekukonko/tablewriter)
-# BuildRequires:  golang(github.com/prometheus/client_golang/prometheus)
-# BuildRequires:  golang(github.com/prometheus/client_golang/prometheus/promhttp)
-# BuildRequires:  golang(github.com/soheilhy/cmux)
-# BuildRequires:  golang(github.com/spf13/cobra)
-# BuildRequires:  golang(github.com/spf13/pflag)
-# BuildRequires:  golang(github.com/tmc/grpc-websocket-proxy/wsproxy)
-# BuildRequires:  golang(github.com/urfave/cli)
-# BuildRequires:  golang(github.com/xiang90/probing)
-# BuildRequires:  golang(go.etcd.io/bbolt)
-# BuildRequires:  golang(go.uber.org/zap)
-# BuildRequires:  golang(go.uber.org/zap/zapcore)
-# BuildRequires:  golang(golang.org/x/crypto/bcrypt)
-# BuildRequires:  golang(golang.org/x/net/context)
-# BuildRequires:  golang(golang.org/x/net/http2)
-# BuildRequires:  golang(golang.org/x/net/trace)
-# BuildRequires:  golang(golang.org/x/time/rate)
-# BuildRequires:  golang(google.golang.org/grpc)
-# BuildRequires:  golang(google.golang.org/grpc/balancer)
-# BuildRequires:  golang(google.golang.org/grpc/codes)
-# BuildRequires:  golang(google.golang.org/grpc/connectivity)
-# BuildRequires:  golang(google.golang.org/grpc/credentials)
-# BuildRequires:  golang(google.golang.org/grpc/grpclog)
-# BuildRequires:  golang(google.golang.org/grpc/health)
-# BuildRequires:  golang(google.golang.org/grpc/health/grpc_health_v1)
-# BuildRequires:  golang(google.golang.org/grpc/keepalive)
-# BuildRequires:  golang(google.golang.org/grpc/metadata)
-# # BuildRequires:  golang(google.golang.org/grpc/naming)
-# BuildRequires:  golang(google.golang.org/grpc/peer)
-# BuildRequires:  golang(google.golang.org/grpc/resolver)
-# BuildRequires:  golang(google.golang.org/grpc/resolver/dns)
-# BuildRequires:  golang(google.golang.org/grpc/resolver/passthrough)
-# BuildRequires:  golang(google.golang.org/grpc/status)
-# BuildRequires:  golang(gopkg.in/cheggaaa/pb.v1)
-# BuildRequires:  golang(gopkg.in/yaml.v2)
-# BuildRequires:  golang(sigs.k8s.io/yaml)
-BuildRequires:  openEuler-rpm-config
-
+BuildRequires:  golang
 BuildRequires:  python3-devel
-# BuildRequires:  %%{py3_dist sphinx sphinx-rtd-theme}
 %{?systemd_requires}
 BuildRequires:  systemd
 Requires(pre):  shadow-utils
-
-%if %{with check}
-# Tests
-# BuildRequires:  golang(github.com/prometheus/client_model/go)
-%endif
 
 %description
 %{common_description}
@@ -206,6 +136,9 @@ getent passwd %{name} >/dev/null || useradd -r -g %{name} -d %{_sharedstatedir}/
 %endif
 
 %changelog
+* Thu Mar 04 2021 jiangxinyu <jiangxinyu@kylinos.cn> - 3.4.14-2
+- Remove the BuildRequires: go-compilers package
+
 * Thu Jan 21 2021 jiangxinyu <jiangxinyu@kylinos.cn> - 3.4.14-1
 - Update to 3.4.14
 
