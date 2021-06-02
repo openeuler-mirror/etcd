@@ -31,7 +31,7 @@ system.}
 %global gosupfiles      integration/fixtures/* etcdserver/api/v2http/testdata/*
 
 Name:           etcd
-Release:        2
+Release:        3
 Summary:        Distributed reliable key-value store for the most critical data of a distributed system
 
 # Upstream license specification: Apache-2.0
@@ -45,6 +45,7 @@ Source3:        man-%{man_version}.tar.gz
 Source10:       genmanpages.sh
 # update grpc-go version to v1.32.0
 Patch1:         0001-Convert-int-to-string-using-strconv.Itoa.patch
+Patch2:		0002-Etcd-on-unsupported-platform-without-ETCD_UNSUPPORTED_ARCH=arm64-set.patch
 
 BuildRequires:  golang
 BuildRequires:  python3-devel
@@ -61,6 +62,7 @@ Requires(pre):  shadow-utils
 %setup -q -n man-%{man_version} -T -b 3
 %forgesetup
 %patch1 -p1
+%patch2 -p1
 # For compatibility
 cp -aR etcdserver/api/snap snap
 cp -aR etcdserver/api/membership etcdserver/membership
@@ -136,6 +138,9 @@ getent passwd %{name} >/dev/null || useradd -r -g %{name} -d %{_sharedstatedir}/
 %endif
 
 %changelog
+* Wed Jun 2021 jiangxinyu <jiangxinyu@kylinos.cn> - 3.4.14-3
+- Solve the problem of etcd on unsupported platform without ETCD_UNSUPPORTED_ARCH=arm64 set
+
 * Thu Mar 04 2021 jiangxinyu <jiangxinyu@kylinos.cn> - 3.4.14-2
 - Remove the BuildRequires: go-compilers package
 
