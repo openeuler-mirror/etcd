@@ -1,0 +1,28 @@
+From b84b5ff496fd1f815c89f8431aeca5cfa9c3e390 Mon Sep 17 00:00:00 2001
+From: jiangxinyu <jiangxinyu@kylinos.cn>
+Date: Wed, 2 Jun 2021 17:04:36 +0800
+Subject: [PATCH] =?UTF-8?q?=E5=85=BC=E5=AE=B9=E6=9E=B6=E6=9E=84?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ etcdmain/etcd.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/etcdmain/etcd.go b/etcdmain/etcd.go
+index 73328a7..1907f99 100644
+--- a/etcdmain/etcd.go
++++ b/etcdmain/etcd.go
+@@ -603,7 +603,7 @@ func identifyDataDirOrDie(lg *zap.Logger, dir string) dirType {
+ 
+ func checkSupportArch() {
+ 	// TODO qualify arm64
+-	if runtime.GOARCH == "amd64" || runtime.GOARCH == "ppc64le" {
++	if runtime.GOARCH == "amd64" || runtime.GOARCH == "ppc64le" || runtime.GOARCH == "arm64" {
+ 		return
+ 	}
+ 	// unsupported arch only configured via environment variable
+-- 
+2.27.0
+
