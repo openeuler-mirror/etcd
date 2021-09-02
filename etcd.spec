@@ -31,7 +31,7 @@ system.}
 %global gosupfiles      integration/fixtures/* etcdserver/api/v2http/testdata/*
 
 Name:           etcd
-Release:        3
+Release:        4
 Summary:        Distributed reliable key-value store for the most critical data of a distributed system
 
 # Upstream license specification: Apache-2.0
@@ -78,9 +78,19 @@ cp ../man-%{man_version}/*.1 man/man1/.
 
 %if %{without bootstrap}
 %build
-GO111MODULE=on GOFLAGS=-mod=vendor go build -o %{gobuilddir}/bin/etcd %{goipath}
+CGO_CFLAGS="-fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2 -O2" \
+CGO_LDFLAGS_ALLOW="-Wl,-z,relro,-z,now" \
+CGO_LDFLAGS="-Wl,-z,relro,-z,now -Wl,-z,noexecstack" \
+GO111MODULE=on GOFLAGS=-mod=vendor \
+go build -buildmode=pie -ldflags "-linkmode=external -w -s" \
+-o %{gobuilddir}/bin/etcd %{goipath}
 for cmd in etcdctl; do
-  GO111MODULE=on GOFLAGS=-mod=vendor go build -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
+  CGO_CFLAGS="-fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2 -O2" \
+  CGO_LDFLAGS_ALLOW="-Wl,-z,relro,-z,now" \
+  CGO_LDFLAGS="-Wl,-z,relro,-z,now -Wl,-z,noexecstack" \
+  GO111MODULE=on GOFLAGS=-mod=vendor \
+  go build -buildmode=pie -ldflags "-linkmode=external -w -s" \
+  -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
 done
 %endif
 
@@ -138,6 +148,9 @@ getent passwd %{name} >/dev/null || useradd -r -g %{name} -d %{_sharedstatedir}/
 %endif
 
 %changelog
+* Wed Sep 2021 jikui <jikui2@huawei.com> - 3.4.14-4
+- modify build flags for secure compilation options
+
 * Wed Jun 2021 jiangxinyu <jiangxinyu@kylinos.cn> - 3.4.14-3
 - Solve the problem of etcd on unsupported platform without ETCD_UNSUPPORTED_ARCH=arm64 set
 
