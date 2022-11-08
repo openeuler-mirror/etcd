@@ -31,7 +31,7 @@ system.}
 %global gosupfiles      integration/fixtures/* etcdserver/api/v2http/testdata/*
 
 Name:           etcd
-Release:        4
+Release:        5
 Summary:        Distributed reliable key-value store for the most critical data of a distributed system
 
 # Upstream license specification: Apache-2.0
@@ -148,6 +148,9 @@ getent passwd %{name} >/dev/null || useradd -r -g %{name} -d %{_sharedstatedir}/
 %endif
 
 %changelog
+* Tue Nov 08 2022 laokz <zhangkai@iscas.ac.cn> - 3.4.14-5
+- add riscv64 support in patch 0002
+
 * Wed Sep 2021 jikui <jikui2@huawei.com> - 3.4.14-4
 - modify build flags for secure compilation options
 
