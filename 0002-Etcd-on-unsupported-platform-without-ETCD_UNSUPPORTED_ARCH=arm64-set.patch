@@ -19,7 +19,7 @@ index 73328a7..1907f99 100644
  func checkSupportArch() {
  	// TODO qualify arm64
 -	if runtime.GOARCH == "amd64" || runtime.GOARCH == "ppc64le" {
-+	if runtime.GOARCH == "amd64" || runtime.GOARCH == "ppc64le" || runtime.GOARCH == "arm64" {
++	if runtime.GOARCH == "amd64" || runtime.GOARCH == "ppc64le" || runtime.GOARCH == "arm64" || runtime.GOARCH == "riscv64" {
  		return
  	}
  	// unsupported arch only configured via environment variable
